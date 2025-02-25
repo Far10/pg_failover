@@ -1,0 +1,19 @@
+#vi /etc/systemd/system/pg_failover.service
+
+[Unit]
+Description=PostgreSQL Failover Monitor
+After=network.target postgresql.service
+Wants=network.target postgresql.service
+
+[Service]
+Type=simple
+User=postgres
+Group=postgres
+ExecStart=/usr/local/bin/mpg_failover.sh
+Restart=always
+RestartSec=10
+StandardOutput=append:/var/log/pg_failover.log
+StandardError=append:/var/log/pg_failover.log
+
+[Install]
+WantedBy=multi-user.target
